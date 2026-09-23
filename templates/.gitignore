@@ -1,0 +1,8 @@
+.env
+*.db
+__pycache__/
+.venv/
+uploads/*
+thumbs/*
+!uploads/.gitkeep
+!thumbs/.gitkeep
