@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Home - StreamFree{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <p class="eyebrow">FREE VIDEO COMMUNITY</p>
+    <h1>Discover and share videos</h1>
+    <p>
+        Watch creators, upload your own content, follow channels,
+        and participate in the community.
+    </p>
+</section>
+
+<form class="toolbar" method="get">
+    <input name="q"
+           value="{{ search or '' }}"
+           placeholder="Search videos">
+
+    <select name="category">
+        <option value="all">All categories</option>
+        <option value="music">Music</option>
+        <option value="gaming">Gaming</option>
+        <option value="news">News</option>
+        <option value="tech">Tech</option>
+        <option value="education">Education</option>
+        <option value="sports">Sports</option>
+        <option value="entertainment">Entertainment</option>
+    </select>
+
+    <button class="button" type="submit">Search</button>
+</form>
+
+<section class="video-grid">
+    {% for video in videos %}
+        <article class="video-card">
+            <a href="{{ url_for('watch', video_id=video['id']) }}">
+                <img class="thumbnail"
+                     src="{{ url_for('thumbs',
+                                     filename=video['thumbnail']) }}">
+            </a>
+
+            <div class="video-card-body">
+                <h3>
+                    <a href="{{ url_for('watch',
+                                        video_id=video['id']) }}">
+                        {{ video['title'] }}
+                    </a>
+                </h3>
+
+                <p class="muted">
+                    {{ video['username'] }} ·
+                    {{ video['views'] }} views ·
+                    {{ video['category'] }}
+                </p>
+
+                <p>{{ video['description'][:120] }}</p>
+
+                <a class="button small"
+                   href="{{ url_for('watch',
+                                   video_id=video['id']) }}">
+                    Watch
+                </a>
+            </div>
+        </article>
+    {% else %}
+        <div class="panel">
+            <p>No videos found.</p>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}
